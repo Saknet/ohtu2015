@@ -9,7 +9,7 @@ public class Kauppa {
     private String kaupanTili;
 
     public Kauppa(VarastoInterface varastoInterface, PankkiInterface pankkiInterface, ViiteInterface viiteInterface) {
-        varasto = varastoInterface;
+      varasto = varastoInterface;
         pankki = pankkiInterface;
         viitegeneraattori = viiteInterface;
         kaupanTili = "33333-44455";
