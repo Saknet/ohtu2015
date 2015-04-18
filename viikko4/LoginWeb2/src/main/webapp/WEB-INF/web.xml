@@ -38,6 +38,10 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    
+    <welcome-file-list>
+        <welcome-file>html_malli.html</welcome-file> 
+    </welcome-file-list>
 
     <servlet-mapping>
         <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
