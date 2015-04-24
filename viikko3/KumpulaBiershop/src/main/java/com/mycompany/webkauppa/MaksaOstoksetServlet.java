@@ -1,6 +1,7 @@
 package com.mycompany.webkauppa;
 
 import com.google.gson.Gson;
+import com.mycompany.webkauppa.ohjaus.Komento;
 import com.mycompany.webkauppa.sovelluslogiikka.Ostoskori;
 import com.mycompany.webkauppa.ohjaus.OstoksenSuoritus;
 import com.mycompany.webkauppa.sovelluslogiikka.Tuote;
@@ -36,12 +37,12 @@ public class MaksaOstoksetServlet extends WebKauppaServlet {
             ostoskori = muodostaOstoskori(request);
         }
 
-        OstoksenSuoritus ostos = new OstoksenSuoritus(nimi, osoite, luottokorttinumero, ostoskori);
+        Komento komento = komennot.ostoksenSuoritus(nimi, osoite, luottokorttinumero, ostoskori);
 
         request.setAttribute("osoite", osoite);
         request.setAttribute("hinta", ostoskori.hinta());
 
-        if (ostos.suorita()) {
+        if (komento.suorita()) {
             naytaSivu("/maksu_suoritettu.jsp", request, response);
         } else {
             naytaSivu("/maksu_epaonnistui.jsp", request, response);

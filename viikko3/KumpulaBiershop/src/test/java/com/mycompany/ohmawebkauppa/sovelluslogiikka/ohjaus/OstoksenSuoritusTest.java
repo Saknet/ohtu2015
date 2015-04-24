@@ -1,6 +1,8 @@
 
 package com.mycompany.ohmawebkauppa.sovelluslogiikka.ohjaus;
 
+import com.mycompany.webkauppa.ohjaus.Komento;
+import com.mycompany.webkauppa.ohjaus.Komentotehdas;
 import com.mycompany.webkauppa.ohjaus.OstoksenSuoritus;
 import com.mycompany.webkauppa.sovelluslogiikka.*;
 import com.mycompany.webkauppa.ulkoiset_rajapinnat.*;
@@ -23,7 +25,7 @@ public class OstoksenSuoritusTest {
     String osoite;
     String luottokortti;
 
-    OstoksenSuoritus ostoksenSuoritus;
+    Komento ostoksenSuoritus;
     
     @Before
     public void setUp() {
@@ -43,7 +45,7 @@ public class OstoksenSuoritusTest {
     
     @Test
     public void josMaksuOnnistuuKoriTyhjenee() {
-        ostoksenSuoritus = new OstoksenSuoritus(nimi, osoite, luottokortti, kori);
+        ostoksenSuoritus = new Komentotehdas().ostoksenSuoritus(nimi, osoite, luottokortti, kori);
         ostoksenSuoritus.suorita();
 
         assertEquals(0, kori.ostokset().size());
@@ -53,13 +55,13 @@ public class OstoksenSuoritusTest {
     
     @Test
     public void josMaksuOnnistuuPankinRajapintaaKaytetty() {
-        ostoksenSuoritus = new OstoksenSuoritus(nimi, osoite, luottokortti, kori);
+        ostoksenSuoritus = new Komentotehdas().ostoksenSuoritus(nimi, osoite, luottokortti, kori);
         ostoksenSuoritus.suorita();       
     }   
 
     @Test
     public void josMaksuOnnistuuToiRajmituksenapintaaKaytetty() {
-        ostoksenSuoritus = new OstoksenSuoritus(nimi, osoite, luottokortti, kori);
+        ostoksenSuoritus = new Komentotehdas().ostoksenSuoritus(nimi, osoite, luottokortti, kori);
         ostoksenSuoritus.suorita();       
     }             
 
@@ -67,11 +69,9 @@ public class OstoksenSuoritusTest {
      
     @Test
     public void josPankkiEiHyvaksyMaksuaPalautetaanFalseToimitustaEiTehda() {        
-        ostoksenSuoritus = new OstoksenSuoritus(nimi, osoite, luottokortti, kori);
-        ostoksenSuoritus.setPankki(hylkaavaPankki);
- 
+        ostoksenSuoritus = new Komentotehdas().ostoksenSuoritus(nimi, osoite, luottokortti, kori, hylkaavaPankki);
         
-        assertFalse( ostoksenSuoritus.suorita() );
+        assertFalse( ostoksenSuoritus.suorita());
         
         // assertSomething
     } 

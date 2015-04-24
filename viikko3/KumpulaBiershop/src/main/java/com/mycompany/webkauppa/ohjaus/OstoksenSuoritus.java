@@ -3,7 +3,7 @@ package com.mycompany.webkauppa.ohjaus;
 import com.mycompany.webkauppa.sovelluslogiikka.*;
 import com.mycompany.webkauppa.ulkoiset_rajapinnat.*;
 
-public class OstoksenSuoritus {
+public class OstoksenSuoritus implements Komento{
 
     private PankkiFasaadi pankki;
     private ToimitusjarjestelmaFasaadi toimitusjarjestelma;
@@ -13,7 +13,7 @@ public class OstoksenSuoritus {
     private Ostoskori ostoskori;
     private Varasto varasto;
 
-    public OstoksenSuoritus(String nimi, String osoite, String luottokorttinumero, Ostoskori kori) {
+    OstoksenSuoritus(String nimi, String osoite, String luottokorttinumero, Ostoskori kori) {
         this.varasto = Varasto.getInstance();
         this.pankki = PankkiFasaadi.getInstance();
         this.toimitusjarjestelma = ToimitusjarjestelmaFasaadi.getInstance();
