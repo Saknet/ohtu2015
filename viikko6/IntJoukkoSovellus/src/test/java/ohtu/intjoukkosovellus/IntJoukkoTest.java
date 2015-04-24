@@ -8,12 +8,21 @@ import static org.junit.Assert.*;
 public class IntJoukkoTest {
 
     IntJoukko joukko;
+    IntJoukko joukko2;
+    IntJoukko joukko3;
 
     @Before
     public void setUp() {
         joukko = new IntJoukko();
         joukko.lisaa(10);
         joukko.lisaa(3);
+        joukko2 = new IntJoukko();
+        joukko2.lisaa(10);
+        joukko2.lisaa(1);
+        joukko2.lisaa(2);
+        joukko3 = new IntJoukko();
+        joukko3.lisaa(1);
+        joukko3.lisaa(2);
     }
 
     @Test
@@ -73,5 +82,40 @@ public class IntJoukkoTest {
     @Test
     public void toStringToimii(){
         assertEquals("{10, 3}", joukko.toString());
+    }
+    
+    @Test
+    public void erotusToimii() {
+        IntJoukko joukko4 = IntJoukko.erotus(joukko2, joukko3);
+        assertTrue(joukko4.kuuluu(10));
+        assertFalse(joukko4.kuuluu(1));
+        assertFalse(joukko4.kuuluu(2));
+        assertEquals(1, joukko4.mahtavuus());
+    }
+    
+    @Test
+    public void leikkausToimii() {
+        IntJoukko joukko4 = IntJoukko.leikkaus(joukko2, joukko3);
+        assertTrue(joukko4.kuuluu(1));
+        assertTrue(joukko4.kuuluu(2));
+        assertFalse(joukko4.kuuluu(10));
+        assertEquals(2, joukko4.mahtavuus());
+    }
+    
+    @Test
+    public void testaaLuonti() {
+        try {
+            IntJoukko joukko3 = new IntJoukko(-1);
+            assertTrue(false);
+        } catch (IndexOutOfBoundsException e) {
+            
+        }
+        try {
+            IntJoukko joukko3 = new IntJoukko(1, -1);
+            assertTrue(false);
+        } catch (IndexOutOfBoundsException e) {
+            
+        }
+                
     }
 }
