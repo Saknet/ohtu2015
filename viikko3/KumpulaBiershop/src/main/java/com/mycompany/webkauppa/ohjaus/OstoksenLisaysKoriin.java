@@ -4,20 +4,18 @@ import com.mycompany.webkauppa.sovelluslogiikka.Ostoskori;
 import com.mycompany.webkauppa.sovelluslogiikka.Tuote;
 import com.mycompany.webkauppa.sovelluslogiikka.Varasto;
 
-public class OstoksenLisaysKoriin implements Komento {
+public class OstoksenLisaysKoriin implements Komento{
 
     private Ostoskori ostoskori;
     private long tuoteId;
-    private Varasto varasto;
 
-    OstoksenLisaysKoriin(Ostoskori ostoskori, long tuoteId) {
+    protected OstoksenLisaysKoriin (Ostoskori ostoskori, long tuoteId) {
         this.ostoskori = ostoskori;
         this.tuoteId = tuoteId;
-        this.varasto = Varasto.getInstance();
     }
 
     @Override
-    public boolean suorita() {
+    public boolean suorita(Varasto varasto) {
         boolean saatiinTuote = varasto.otaVarastosta(tuoteId);
         
         if (!saatiinTuote) {

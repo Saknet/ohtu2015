@@ -14,7 +14,7 @@ public class LisaaOstoskoriinServlet extends WebKauppaServlet {
 
         long tuoteId = Long.parseLong( request.getParameter("tuoteId") );
 
-        komennot.ostoksenLisaysKoriin(haeSessionOstoskori(request), tuoteId).suorita();
+        komennot.ostoksenLisaysKoriin(haeSessionOstoskori(request), tuoteId).suorita(varasto);
 
         naytaSivu("/Tuotelista", request, response);
     }

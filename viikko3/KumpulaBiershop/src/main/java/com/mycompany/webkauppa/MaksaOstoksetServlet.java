@@ -1,10 +1,10 @@
 package com.mycompany.webkauppa;
 
 import com.google.gson.Gson;
-import com.mycompany.webkauppa.ohjaus.Komento;
 import com.mycompany.webkauppa.sovelluslogiikka.Ostoskori;
-import com.mycompany.webkauppa.ohjaus.OstoksenSuoritus;
 import com.mycompany.webkauppa.sovelluslogiikka.Tuote;
+import com.mycompany.webkauppa.ulkoiset_rajapinnat.PankkiFasaadi;
+import com.mycompany.webkauppa.ulkoiset_rajapinnat.ToimitusjarjestelmaFasaadi;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -24,7 +24,7 @@ public class MaksaOstoksetServlet extends WebKauppaServlet {
         naytaSivu("/maksa_ostokset.jsp", request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(PankkiFasaadi pankki, ToimitusjarjestelmaFasaadi toimitus, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String nimi = request.getParameter("nimi");
@@ -37,12 +37,11 @@ public class MaksaOstoksetServlet extends WebKauppaServlet {
             ostoskori = muodostaOstoskori(request);
         }
 
-        Komento komento = komennot.ostoksenSuoritus(nimi, osoite, luottokorttinumero, ostoskori);
 
         request.setAttribute("osoite", osoite);
         request.setAttribute("hinta", ostoskori.hinta());
 
-        if (komento.suorita()) {
+        if (komennot.ostoksenSuoritus(pankki, toimitus, nimi, osoite, luottokorttinumero, ostoskori).suorita(varasto)) {
             naytaSivu("/maksu_suoritettu.jsp", request, response);
         } else {
             naytaSivu("/maksu_epaonnistui.jsp", request, response);

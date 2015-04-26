@@ -1,31 +1,20 @@
 package com.mycompany.webkauppa.sovelluslogiikka;
 
 import com.mycompany.webkauppa.model.tietokantayhteydet.TuoteDAO;
+import com.mycompany.webkauppa.model.tietokantayhteydet.TuoteDAOInMemory;
 import java.util.*;
 
 public class Varasto {
-
-    private static Varasto instanssi;
-    private static TuoteDAO tuoteDAO = TuoteDAO.inMemory();
-
-    public static void resetInstance() {
- 	instanssi = new Varasto();
-    }
-
-    public static Varasto getInstance() {
-        if (instanssi == null) {
-            instanssi = new Varasto();
-        }
-
-        return instanssi;
-    }
-
-    public static void setTuoteDAO(TuoteDAO dao) {
+    
+    private TuoteDAO tuoteDAO;
+    private List<Tuote> tuotteet;
+    
+    public void setTuoteDAO(TuoteDAO dao) {
         tuoteDAO = dao;
     }
-    private List<Tuote> tuotteet;
 
-    private Varasto() {
+    public Varasto() {
+        tuoteDAO = new TuoteDAOInMemory();
         tuotteet = tuoteDAO.findAll();
     }
 

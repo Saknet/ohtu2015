@@ -68,7 +68,7 @@ public class TuotteenLisaysOstoskoriinScenarios extends WebScenarioBase {
     }
     
     private int etsiTuotteenHinta(String item) {
-        Varasto varasto = Varasto.getInstance();
+        Varasto varasto = new Varasto();
         
         for (Tuote tuote : varasto.tuotteidenLista()) {
             if (tuote.getNimi().equals(item)) {

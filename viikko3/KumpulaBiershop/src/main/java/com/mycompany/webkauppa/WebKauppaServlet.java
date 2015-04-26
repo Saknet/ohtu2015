@@ -16,10 +16,10 @@ public abstract class WebKauppaServlet extends HttpServlet {
 
     protected HttpSession sessio;
     protected Varasto varasto;
-    Komentotehdas komennot;
+    protected Komentotehdas komennot;
 
     public WebKauppaServlet() {
-        varasto = Varasto.getInstance();
+        varasto = new Varasto();
         komennot = new Komentotehdas();
     }        
     

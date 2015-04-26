@@ -36,10 +36,11 @@ public class HallintasivuNayttaaTuotteidenTiedotScenarios extends WebScenarioBas
     @When("you have items in stock")
     public void whenYouHaveItemsInStock() {
         tuotteet = new ArrayList<Tuote>();
+        Varasto varasto = new Varasto();
         
-        tuotteet.add( Varasto.getInstance().etsiTuote(1) ); 
-        tuotteet.add( Varasto.getInstance().etsiTuote(2) );
-        tuotteet.add( Varasto.getInstance().etsiTuote(3) );
+        tuotteet.add( varasto.etsiTuote(1) ); 
+        tuotteet.add( varasto.etsiTuote(2) );
+        tuotteet.add( varasto.etsiTuote(3) );
     }
 
     @Then("the price and saldo of items is correctly shown")

@@ -60,6 +60,6 @@
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase classname="com.mycompany.webkauppa.sovelluslogiikka.OstosTest" name="hintaJaLukumaaraOikeinJosOstoksessaMontaTuotetta" time="0"/>
-  <testcase classname="com.mycompany.webkauppa.sovelluslogiikka.OstosTest" name="lukumaaraJaHintaVahintaanNolla" time="0"/>
   <testcase classname="com.mycompany.webkauppa.sovelluslogiikka.OstosTest" name="luodunOstoksenAttribuutitOikein" time="0"/>
+  <testcase classname="com.mycompany.webkauppa.sovelluslogiikka.OstosTest" name="lukumaaraJaHintaVahintaanNolla" time="0"/>
 </testsuite>

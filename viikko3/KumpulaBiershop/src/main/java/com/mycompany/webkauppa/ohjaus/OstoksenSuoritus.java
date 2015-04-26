@@ -6,24 +6,24 @@ import com.mycompany.webkauppa.ulkoiset_rajapinnat.*;
 public class OstoksenSuoritus implements Komento{
 
     private PankkiFasaadi pankki;
-    private ToimitusjarjestelmaFasaadi toimitusjarjestelma;
+    private ToimitusjarjestelmaFasaadi toimitus;
     private String asiakkaanNimi;
     private String postitusosoite;
     private String luottokortti;
     private Ostoskori ostoskori;
     private Varasto varasto;
 
-    OstoksenSuoritus(String nimi, String osoite, String luottokorttinumero, Ostoskori kori) {
-        this.varasto = Varasto.getInstance();
-        this.pankki = PankkiFasaadi.getInstance();
-        this.toimitusjarjestelma = ToimitusjarjestelmaFasaadi.getInstance();
+    protected OstoksenSuoritus(PankkiFasaadi pankki, ToimitusjarjestelmaFasaadi toimitus, String nimi, String osoite, String luottokorttinumero, Ostoskori kori) {
+        this.varasto = new Varasto();
+        this.pankki = pankki;
+        this.toimitus = toimitus;
         this.asiakkaanNimi = nimi;
         this.postitusosoite = osoite;
         this.luottokortti = luottokorttinumero;
         this.ostoskori = kori;
     }
 
-    public boolean suorita() {
+    public boolean suorita(Varasto varasto) {
         if ( asiakkaanNimi.length()==0 || postitusosoite.length()==0 || ostoskori.tuotteitaKorissa()==0 )
             return false;
         
@@ -31,7 +31,7 @@ public class OstoksenSuoritus implements Komento{
             return false;
         }
 
-        toimitusjarjestelma.kirjaatoimitus(asiakkaanNimi, postitusosoite, ostoskori.ostokset());
+        toimitus.kirjaatoimitus(asiakkaanNimi, postitusosoite, ostoskori.ostokset());
         ostoskori.tyhjenna();
         
         return true;

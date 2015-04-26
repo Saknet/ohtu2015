@@ -30,7 +30,7 @@ public class TuoteXML extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        Varasto varasto = Varasto.getInstance();
+        Varasto varasto = new Varasto();
         Tuotelista tuotteet = new Tuotelista();
         tuotteet.tuotelista = varasto.tuotteidenLista();
 

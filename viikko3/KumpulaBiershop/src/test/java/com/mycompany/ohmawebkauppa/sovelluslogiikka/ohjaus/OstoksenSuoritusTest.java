@@ -1,7 +1,6 @@
 
 package com.mycompany.ohmawebkauppa.sovelluslogiikka.ohjaus;
 
-import com.mycompany.webkauppa.ohjaus.Komento;
 import com.mycompany.webkauppa.ohjaus.Komentotehdas;
 import com.mycompany.webkauppa.ohjaus.OstoksenSuoritus;
 import com.mycompany.webkauppa.sovelluslogiikka.*;
@@ -11,10 +10,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class OstoksenSuoritusTest {
-    PankkiFasaadi pankki = PankkiFasaadi.getInstance();
+    PankkiFasaadi pankki = new PankkiFasaadi();
     PankkiFasaadi hylkaavaPankki = teeHylkaavaPankki();
-    ToimitusjarjestelmaFasaadi toimitusJarjestelma = ToimitusjarjestelmaFasaadi.getInstance();
-    Varasto varasto = Varasto.getInstance();
+    ToimitusjarjestelmaFasaadi toimitusJarjestelma = new ToimitusjarjestelmaFasaadi();
+    Varasto varasto = new Varasto();
     
     long tuoteId1;
     long tuoteId2;
@@ -25,7 +24,8 @@ public class OstoksenSuoritusTest {
     String osoite;
     String luottokortti;
 
-    Komento ostoksenSuoritus;
+    Komentotehdas komentotehdas;
+    OstoksenSuoritus ostoksenSuoritus;
     
     @Before
     public void setUp() {
@@ -41,12 +41,12 @@ public class OstoksenSuoritusTest {
         kori = new Ostoskori();
         kori.lisaaTuote(tuote1);        
         kori.lisaaTuote(tuote2);
+        komentotehdas = new Komentotehdas();
     }
     
     @Test
     public void josMaksuOnnistuuKoriTyhjenee() {
-        ostoksenSuoritus = new Komentotehdas().ostoksenSuoritus(nimi, osoite, luottokortti, kori);
-        ostoksenSuoritus.suorita();
+        komentotehdas.ostoksenSuoritus(pankki, toimitusJarjestelma, nimi, osoite, luottokortti, kori).suorita(varasto);
 
         assertEquals(0, kori.ostokset().size());
         assertEquals(0, kori.hinta()); 
@@ -55,23 +55,20 @@ public class OstoksenSuoritusTest {
     
     @Test
     public void josMaksuOnnistuuPankinRajapintaaKaytetty() {
-        ostoksenSuoritus = new Komentotehdas().ostoksenSuoritus(nimi, osoite, luottokortti, kori);
-        ostoksenSuoritus.suorita();       
+        komentotehdas.ostoksenSuoritus(pankki, toimitusJarjestelma, nimi, osoite, luottokortti, kori).suorita(varasto);      
     }   
 
     @Test
     public void josMaksuOnnistuuToiRajmituksenapintaaKaytetty() {
-        ostoksenSuoritus = new Komentotehdas().ostoksenSuoritus(nimi, osoite, luottokortti, kori);
-        ostoksenSuoritus.suorita();       
+        komentotehdas.ostoksenSuoritus(pankki, toimitusJarjestelma, nimi, osoite, luottokortti, kori).suorita(varasto);       
     }             
 
     // - tyhjä kori, nimi tai osoite -> ei kutsuta pankkia, ei toimitusta
      
     @Test
     public void josPankkiEiHyvaksyMaksuaPalautetaanFalseToimitustaEiTehda() {        
-        ostoksenSuoritus = new Komentotehdas().ostoksenSuoritus(nimi, osoite, luottokortti, kori, hylkaavaPankki);
-        
-        assertFalse( ostoksenSuoritus.suorita());
+        ostoksenSuoritus = komentotehdas.ostoksenSuoritus(hylkaavaPankki, toimitusJarjestelma, nimi, osoite, luottokortti, kori);
+        assertFalse( ostoksenSuoritus.suorita(varasto));
         
         // assertSomething
     } 

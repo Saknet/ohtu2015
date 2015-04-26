@@ -8,16 +8,13 @@ import com.mycompany.webkauppa.sovelluslogiikka.Varasto;
 public class OstoksenPoistoKorista implements Komento {
     private Ostoskori ostoskori;
     private long tuoteId;
-    private Varasto varasto;
     
-    OstoksenPoistoKorista(Ostoskori ostoskori, long tuoteId) {
+    protected OstoksenPoistoKorista(Ostoskori ostoskori, long tuoteId) {
         this.ostoskori = ostoskori;
         this.tuoteId = tuoteId;
-        this.varasto = Varasto.getInstance();
     }    
     
-    @Override
-    public boolean suorita() {
+    public boolean suorita(Varasto varasto) {
         varasto.palautaVarastoon( tuoteId );         
         Tuote poistettava = varasto.etsiTuote( tuoteId );              
         ostoskori.poista(poistettava);
